@@ -1,0 +1,17 @@
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\Steam VR Data.exe
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\Steam VR Data.deps.json
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\Steam VR Data.runtimeconfig.json
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\Steam VR Data.dll
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\Steam VR Data.pdb
+C:\Users\Con_P\Desktop\Steam VR Data\bin\Debug\net7.0\HtmlAgilityPack.dll
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.AssemblyReference.cache
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.AssemblyInfoInputs.cache
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.AssemblyInfo.cs
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.CoreCompileInputs.cache
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.CopyComplete
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.dll
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\refint\Steam VR Data.dll
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.pdb
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.genruntimeconfig.cache
+C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\ref\Steam VR Data.dll
