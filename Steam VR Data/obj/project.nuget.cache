@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AzdqVsuSQGBU1/82982mglp9YLyqNU+4iz7ief+j+skfK5D+L0XuBBik2BNGi7NzzMhLpWOXS9SEljm+fR5z8Q==",
+  "dgSpecHash": "vcWt5raV0kT6cvcJR4MzQ71kfkQQcLYapn2rFKvvvZhU72Du+XBRi6awg75Wif4Cvhtn+DEVBZueXUtUKl30PQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\Steam VR Data.csproj",
+  "projectFilePath": "D:\\SteamVR-Data-Scraper\\Steam VR Data\\Steam VR Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Con_P\\.nuget\\packages\\htmlagilitypack\\1.11.46\\htmlagilitypack.1.11.46.nupkg.sha512"
   ],

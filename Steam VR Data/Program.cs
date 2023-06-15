@@ -52,7 +52,7 @@ namespace Name{
                                 var resp = (HttpWebResponse)ex.Response;
                                 if (resp.StatusCode == HttpStatusCode.NotFound)
                                 {
-                                    Console.WriteLine($"Monthly players data not found for {gameName}.");
+                                    Console.WriteLine($"Active players data not found for {gameName}.");
                                     continue;
                                 }
                             }
@@ -62,7 +62,7 @@ namespace Name{
                     var chartDoc = new HtmlDocument();
                     chartDoc.LoadHtml(chartHtml);
 
-                    var monthlyPlayersNode = chartDoc.DocumentNode.SelectSingleNode("//*[@id="content-wrapper"]/div[6]/table/tbody/tr[1]/td[2]");
+                    var monthlyPlayersNode = chartDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/div[3]/div[1]/span");
 
                     if (monthlyPlayersNode != null && float.TryParse(monthlyPlayersNode.InnerText, out var monthlyPlayers))
                     {
@@ -71,21 +71,21 @@ namespace Name{
                     }
                     else
                     {
-                        Console.WriteLine($"Monthly players data not found for {gameName}.");
+                        Console.WriteLine($"Active players data not found for {gameName}.");
                     }
                 }
 
                 games = games.OrderByDescending(x => x.Item2 == float.MinValue).ThenByDescending(x => x.Item2).ToList();
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\nTotal monthly players: {totalMonthlyPlayers.ToString("F1")}");
+                Console.WriteLine($"\nTotal Active players: {totalMonthlyPlayers.ToString("F1")}");
                 Console.ResetColor();
 
                 Console.WriteLine("Top 100 VR Games on Steam:");
                 int count = 0;
                 foreach (var game in games.Where(g => g.Item2 >= 0).OrderByDescending(g => g.Item2))
                 {
-                    Console.WriteLine($"{game.Item1}: {game.Item2:F1} players per month.");
+                    Console.WriteLine($"{game.Item1}: {game.Item2:F1} active players.");
                     count++;
                     if (count == 200) break;
                 }

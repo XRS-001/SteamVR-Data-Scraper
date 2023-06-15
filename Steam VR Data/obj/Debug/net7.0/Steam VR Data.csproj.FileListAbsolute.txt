@@ -15,3 +15,20 @@ C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\refint\Steam VR Data.dll
 C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.pdb
 C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\Steam VR Data.genruntimeconfig.cache
 C:\Users\Con_P\Desktop\Steam VR Data\obj\Debug\net7.0\ref\Steam VR Data.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Steam VR Data.exe
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Steam VR Data.deps.json
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Steam VR Data.runtimeconfig.json
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Steam VR Data.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Steam VR Data.pdb
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\HtmlAgilityPack.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.AssemblyReference.cache
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.AssemblyInfoInputs.cache
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.AssemblyInfo.cs
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.CoreCompileInputs.cache
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.csproj.CopyComplete
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\refint\Steam VR Data.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.pdb
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.genruntimeconfig.cache
+D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\ref\Steam VR Data.dll

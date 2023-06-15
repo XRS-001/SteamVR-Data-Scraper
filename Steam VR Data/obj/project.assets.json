@@ -78,11 +78,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\Steam VR Data.csproj",
+      "projectUniqueName": "D:\\SteamVR-Data-Scraper\\Steam VR Data\\Steam VR Data.csproj",
       "projectName": "Steam VR Data",
-      "projectPath": "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\Steam VR Data.csproj",
+      "projectPath": "D:\\SteamVR-Data-Scraper\\Steam VR Data\\Steam VR Data.csproj",
       "packagesPath": "C:\\Users\\Con_P\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\obj\\",
+      "outputPath": "D:\\SteamVR-Data-Scraper\\Steam VR Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Con_P\\AppData\\Roaming\\NuGet\\NuGet.Config",
