@@ -12,12 +12,26 @@ namespace Name{
         {
             var url1 = "https://store.steampowered.com/search/?tags=21978&supportedlang=english&ndl=1&count=100";
             var url2 = "https://store.steampowered.com/search/?vrsupport=401&supportedlang=english&ndl=1&count=100";
-            RunProgram(url1, "top 100 VR supported games");
-            RunProgram(url2, "top 100 VR only games");
+            Console.WriteLine("Which option would you like to scrape?");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Option1: active player data from as recent as possible.");
+            Console.WriteLine("Option2: peak active player data from the past 24 hours.");
+            Console.ResetColor();
+            string optionPicked = Console.ReadLine();
+            if(optionPicked.Contains("1")||optionPicked.Contains("first"))
+            {
+                RunProgram(url1, "active players from as recently as possible from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[1]/span");
+                RunProgram(url2, "active players from as recently as possible from the top 100 VR only games", "/html/body/div[3]/div[3]/div[1]/span");
+            }
+            if(optionPicked.Contains("2")||optionPicked.Contains("second"))
+            {
+                RunProgram(url1, "peak active players in 24 hours from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[2]/span");
+                RunProgram(url2, "peak active players in 24 hours from the top 100 VR only games", "/html/body/div[3]/div[3]/div[2]/span");
+            } 
             Console.ReadKey();
         }
 
-        static void RunProgram(string url, string top100Message)
+        static void RunProgram(string url, string top100Message,string XPath)
         {
             Console.WriteLine($"Scraping {top100Message} from store.steampowered.com....\n");
             var games = new List<Tuple<string, float>>();
@@ -62,7 +76,7 @@ namespace Name{
                     var chartDoc = new HtmlDocument();
                     chartDoc.LoadHtml(chartHtml);
 
-                    var monthlyPlayersNode = chartDoc.DocumentNode.SelectSingleNode("/html/body/div[3]/div[3]/div[1]/span");
+                    var monthlyPlayersNode = chartDoc.DocumentNode.SelectSingleNode(XPath);
 
                     if (monthlyPlayersNode != null && float.TryParse(monthlyPlayersNode.InnerText, out var monthlyPlayers))
                     {
