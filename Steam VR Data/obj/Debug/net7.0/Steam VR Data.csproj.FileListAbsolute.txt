@@ -32,3 +32,9 @@ D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\refint\Steam VR Data.dll
 D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.pdb
 D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\Steam VR Data.genruntimeconfig.cache
 D:\SteamVR-Data-Scraper\Steam VR Data\obj\Debug\net7.0\ref\Steam VR Data.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Google.Apis.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Google.Apis.Auth.PlatformServices.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Google.Apis.Auth.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Google.Apis.Core.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Google.Apis.Sheets.v4.dll
+D:\SteamVR-Data-Scraper\Steam VR Data\bin\Debug\net7.0\Newtonsoft.Json.dll
