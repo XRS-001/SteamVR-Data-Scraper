@@ -6,6 +6,7 @@ using HtmlAgilityPack;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
+using System.Globalization;
 using System.IO;
 using Google.Apis.Sheets.v4.Data;
 
@@ -16,8 +17,8 @@ internal class NewBaseType
         static readonly string SpreadsheetId = "1iNCpvySskw4ANIOHQirU8vm66C86sLTGugGrXH1i9dk";
         static readonly string SheetNameVRSupported = "VRSupported";
         static readonly string SheetNameVROnly = "VROnly";
-        static readonly string SheetNameVROnlyPeak = "VRSupportedPeak";
-        static readonly string SheetNameVRSupportedPeak = "VROnlyPeak";
+        static readonly string SheetNameVROnlyPeak = "VROnlyPeak";
+        static readonly string SheetNameVRSupportedPeak = "VRSupportedPeak";
         static readonly string CredentialsPath = "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\webscraper-389916-1e30a707e640.json";
         private static SheetsService InitializeSheetsService(string credentialsPath)
         {
@@ -201,7 +202,9 @@ internal class NewBaseType
             if (timeNode != null)
             {
                 var timeValue = timeNode.Attributes["title"].Value;
-                return timeValue;
+                DateTime dateTime = DateTime.ParseExact(timeValue, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
+                string timeOutput = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                return timeOutput;
             }
             else
             {
