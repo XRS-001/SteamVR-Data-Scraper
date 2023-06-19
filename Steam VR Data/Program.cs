@@ -58,10 +58,10 @@ internal class NewBaseType
         {   
             var url1 = "https://store.steampowered.com/search/?tags=21978&supportedlang=english&ndl=1&count=100";
             var url2 = "https://store.steampowered.com/search/?vrsupport=401&supportedlang=english&ndl=1&count=100";
-            RunProgram(url1, "active players from as recently as possible from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVRSupported);
-            RunProgram(url2, "active players from as recently as possible from the top 100 VR only games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVROnly);
-            RunProgram(url1, "peak active players in 24 hours from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVRSupportedPeak);
-            RunProgram(url2, "peak active players in 24 hours from the top 100 VR only games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVROnlyPeak);
+            RunProgram(url1, "active players from as recently as possible from the top 50 VR supported games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVRSupported);
+            RunProgram(url2, "active players from as recently as possible from the top 50 VR only games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVROnly);
+            RunProgram(url1, "peak active players in 24 hours from the top 50 VR supported games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVRSupportedPeak);
+            RunProgram(url2, "peak active players in 24 hours from the top 50 VR only games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVROnlyPeak);
             Console.ReadKey();
         }
         static void CallGoogle(string SheetName, List<object> rowData, int collumA)
@@ -81,12 +81,12 @@ internal class NewBaseType
             }
         }
 
-        static void RunProgram(string url, string top100Message, string XPath, string sheetName)
+        static void RunProgram(string url, string top50Message, string XPath, string sheetName)
         {
             int collumA = 1;
-            Console.WriteLine($"Scraping {top100Message} from store.steampowered.com....\n");
+            Console.WriteLine($"Scraping {top50Message} from store.steampowered.com....\n");
             List<object> games = new List<object>();
-            float totalMonthlyPlayers = 0;
+            float totalactivePlayers = 0;
 
             using (var client = new WebClient())
             {
@@ -128,20 +128,20 @@ internal class NewBaseType
                     var chartDoc = new HtmlDocument();
                     chartDoc.LoadHtml(chartHtml);
 
-                    var monthlyPlayersNode = chartDoc.DocumentNode.SelectSingleNode(XPath);
+                    var activePlayersNode = chartDoc.DocumentNode.SelectSingleNode(XPath);
 
-                    if (monthlyPlayersNode != null && float.TryParse(monthlyPlayersNode.InnerText, out var monthlyPlayers))
+                    if (activePlayersNode != null && float.TryParse(activePlayersNode.InnerText, out var activePlayers))
                     {
                         List<object> game = new List<object>
                         {
                             gameName,
-                            monthlyPlayers,
+                            activePlayers,
                             time,
                             appId,
                             imageUrl,
                         };
                         games.Add(game);
-                        totalMonthlyPlayers += monthlyPlayers;
+                        totalactivePlayers += activePlayers;
                     }
                     else
                     {
@@ -150,7 +150,7 @@ internal class NewBaseType
                 }
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\nTotal Active players: {totalMonthlyPlayers.ToString("F1")}");
+                Console.WriteLine($"\nTotal Active players: {totalactivePlayers.ToString("F1")}");
                 Console.ResetColor();
 
                 Console.WriteLine("Top 100 VR Games on Steam:");
