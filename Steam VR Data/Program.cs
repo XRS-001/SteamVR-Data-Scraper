@@ -3,90 +3,102 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using HtmlAgilityPack;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.Sheets.v4;
 using System.Globalization;
 using System.IO;
-using Google.Apis.Sheets.v4.Data;
 
 internal class NewBaseType
     {
-        static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        static readonly string ApplicationName = "Google Sheets Example";
-        static readonly string SpreadsheetId = "1iNCpvySskw4ANIOHQirU8vm66C86sLTGugGrXH1i9dk";
         static readonly string SheetNameVRSupported = "VRSupported";
         static readonly string SheetNameVROnly = "VROnly";
         static readonly string SheetNameVROnlyPeak = "VROnlyPeak";
         static readonly string SheetNameVRSupportedPeak = "VRSupportedPeak";
-        static readonly string CredentialsPath = "C:\\Users\\Con_P\\Desktop\\Steam VR Data\\webscraper-389916-1e30a707e640.json";
-        private static SheetsService InitializeSheetsService(string credentialsPath)
-        {
-            GoogleCredential credential;
-
-            using (var stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
-            {
-                credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
-            }
-
-            return new SheetsService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName
-            });
-        }
-
-        private static void AppendData(SheetsService service, string spreadsheetId, string sheetName, IList<object> rowData, int collumA)
-        {
-            // Define the range where the data will be appended
-            string range = $"{sheetName}!A{collumA}:B3";
-
-            // Create the value range object
-            var valueRange = new ValueRange
-            {
-                Values = new List<IList<object>> { rowData }
-            };
-
-            // Create the AppendValuesRequest
-            var request = service.Spreadsheets.Values.Append(valueRange, spreadsheetId, range);
-            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
-
-            // Execute the request
-            var response = request.Execute();
-        }
         static void Main(string[] args)
         {   
-            var url1 = "https://store.steampowered.com/search/?tags=21978&supportedlang=english&ndl=1&count=100";
-            var url2 = "https://store.steampowered.com/search/?vrsupport=401&supportedlang=english&ndl=1&count=100";
-            RunProgram(url1, "active players from as recently as possible from the top 50 VR supported games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVRSupported);
-            RunProgram(url2, "active players from as recently as possible from the top 50 VR only games", "/html/body/div[3]/div[3]/div[1]/span", SheetNameVROnly);
-            RunProgram(url1, "peak active players in 24 hours from the top 50 VR supported games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVRSupportedPeak);
-            RunProgram(url2, "peak active players in 24 hours from the top 50 VR only games", "/html/body/div[3]/div[3]/div[2]/span", SheetNameVROnlyPeak);
-            Console.ReadKey();
-        }
-        static void CallGoogle(string SheetName, List<object> rowData, int collumA)
-        {
-            try
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Pick which option you'd like to scrape");
+            Console.WriteLine("-----------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Option 1: print all data from a specific time frame for 100 games");
+            Console.WriteLine("Option 2: print average active players data from a specific game from a specific date");
+            Console.WriteLine("Option 3: Misc data on a chosen game.");
+            string optionPicked = Console.ReadLine();
+            while (!string.IsNullOrWhiteSpace(optionPicked))
             {
-                // Initialize the Sheets service
-                SheetsService service = InitializeSheetsService(CredentialsPath);
+                switch (optionPicked)
+                {
+                    case "1":
+                        Option1();
+                        break;
 
-                // Append the data to the spreadsheet
-                AppendData(service, SpreadsheetId, SheetName, rowData, collumA);
-                Console.WriteLine("Data appended successfully!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                    case "2":
+                        PrintSpecificGame();
+                        break;
+
+                    case "3":
+                        PrintMiscData();
+                        break;
+
+                    default: Console.WriteLine("Invalid option.");
+                        break;
+                }
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Pick an option or press enter to exit");
+                optionPicked = Console.ReadLine();
+                Console.ResetColor();
             }
         }
-
-        static void RunProgram(string url, string top50Message, string XPath, string sheetName)
+        static void Option1()
         {
-            int collumA = 1;
-            Console.WriteLine($"Scraping {top50Message} from store.steampowered.com....\n");
+            bool shouldContinue = true;
+            while (shouldContinue)
+            {
+                var url1 = "https://store.steampowered.com/search/?tags=21978&supportedlang=english&ndl=1&count=100";
+                var url2 = "https://store.steampowered.com/search/?vrsupport=401&supportedlang=english&ndl=1&count=100";
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("What data would you like? (pick a number or click enter to exit)");
+                Console.WriteLine("----------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("1: Active players from as recently as possible from the top 50 VR supported games.");
+                Console.WriteLine("2: Active players from as recently as possible from the top 50 VR only games.");
+                Console.WriteLine("3: Peak active players in 24 hours from the top 50 VR supported games.");
+                Console.WriteLine("4: Peak active players in 24 hours from the top 50 VR only games.");
+                Console.ResetColor();
+                string optionPicked = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(optionPicked))
+                {
+                    shouldContinue = false;
+                    continue;
+                }
+                switch (optionPicked)
+                {
+                    case "1":
+                        PrintActivePlayerData(url1, "active players from as recently as possible from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[1]/span");
+                        break;
+
+                    case "2":
+                        PrintActivePlayerData(url2, "active players from as recently as possible from the top 100 VR only games", "/html/body/div[3]/div[3]/div[1]/span");
+                        break;
+
+                    case "3":
+                        PrintActivePlayerData(url1, "peak active players in 24 hours from the top 100 VR supported games", "/html/body/div[3]/div[3]/div[2]/span");
+                        break;
+
+                    case "4":
+                        PrintActivePlayerData(url2, "peak active players in 24 hours from the top 100 VR only games", "/html/body/div[3]/div[3]/div[2]/span");
+                        break;
+
+                    default: Console.WriteLine("Invalid option.");
+                        break;
+                }
+            }
+        }
+        static void PrintActivePlayerData(string url, string top100Message, string XPath)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Scraping {top100Message} from store.steampowered.com....\n");
+            Console.ResetColor();
             List<object> games = new List<object>();
-            float totalactivePlayers = 0;
+            float totalActivePlayers = 0;
 
             using (var client = new WebClient())
             {
@@ -101,7 +113,6 @@ internal class NewBaseType
                 {
                     var gameName = gameNode.SelectSingleNode(".//span[@class='title']").InnerText;
                     var appId = GetAppId(gameName);
-                    string imageUrl = $"//steamcharts.com/assets/steam-images/{appId}.jpg";
                     var chartUrl = $"https://steamcharts.com/app/{appId}";
                     var chartHtml = "";
 
@@ -110,7 +121,7 @@ internal class NewBaseType
                         try
                         {
                             chartHtml = chartClient.DownloadString(chartUrl);
-                            time = GetTime(chartHtml);
+                            time = GetTime(chartHtml, "yyyy-MM-dd HH:mm:ss");
                         }
                         catch (WebException ex)
                         {
@@ -135,38 +146,229 @@ internal class NewBaseType
                         List<object> game = new List<object>
                         {
                             gameName,
-                            activePlayers,
+                            activePlayers.ToString("N0"), // Format the active players number with commas
                             time,
-                            appId,
-                            imageUrl,
                         };
                         games.Add(game);
-                        totalactivePlayers += activePlayers;
+                        totalActivePlayers += activePlayers;
                     }
                     else
                     {
                         Console.WriteLine($"Active players data not found for {gameName}.");
-                    } 
+                    }
                 }
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\nTotal Active players: {totalactivePlayers.ToString("F1")}");
+                Console.WriteLine($"\nTotal Active players: {totalActivePlayers.ToString("N0")}"); // Format the total active players with commas
                 Console.ResetColor();
 
                 Console.WriteLine("Top 100 VR Games on Steam:");
                 int count = 0;
                 foreach (List<object> game in games)
                 {
-                    collumA ++;
-                    CallGoogle(sheetName, game, collumA);
-                    Console.WriteLine($"App id: {game[3]} ImageURL: {game[4]} {game[0]}: {game[1]:F1} active players at {game[2]}");
+                    Console.WriteLine($"{game[0]}: {game[1]} active players at {game[2]}");
                     count++;
-                    if (count == 50) break;
+                    if (count == 100) break;
                 }
             }
             Console.WriteLine();
         }
 
+        static void PrintSpecificGame()
+        {
+            var time = DateTime.Now;
+            string currentDate = DateTime.Now.ToString("MMMM yyyy");
+            bool shouldContinue = true;
+            while (shouldContinue)
+            {
+                bool gameFound = false;
+                bool dateFound = false;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("What game would you like to scrape? (press enter to exit)");
+                Console.ResetColor();
+                string gamePicked = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(gamePicked))
+                {
+                    shouldContinue = false;
+                    continue;
+                }
+                gamePicked = CapitalizeFirstLetter(gamePicked);
+                int appId = GetAppId(gamePicked);
+                List<object> games = new List<object>();
+                float activePlayers = 0;
+                var steamUrl = $"https://store.steampowered.com/app/{appId}/{gamePicked}/";
+                using (var client = new WebClient())
+                {
+                    var html = client.DownloadString(steamUrl);
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    var gameName = doc.DocumentNode.SelectSingleNode("/html/body/div[1]/div[7]/div[8]/div[1]/div[2]/div[1]/div[2]/div[2]/div/div[3]")?.InnerText;
+                    if (gameName == gamePicked)
+                    {
+                        gameFound = true;
+                    }
+                }
+                string url = $"https://steamcharts.com/app/{appId}";
+                if (gameFound)
+                {
+                    try
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("From what date? Eg: 'May 2022'");
+                        Console.ResetColor();
+                        string datePicked = Console.ReadLine();
+                        datePicked = CapitalizeFirstLetter(datePicked);
+                        using (var client = new WebClient())
+                        {
+                            var html = client.DownloadString(url);
+                            var doc = new HtmlDocument();
+                            doc.LoadHtml(html);
+
+                            var tableBody = doc.DocumentNode.SelectSingleNode("//tbody");
+                            var tableRows = doc.DocumentNode.SelectNodes(".//tr");
+                            foreach (var row in tableRows)
+                            {
+                                var dateNode = row.SelectSingleNode(".//td[1]");
+                                if (dateNode != null)
+                                {
+                                    string date = dateNode.InnerText.Trim();
+                                    if(datePicked.Contains($"{currentDate}"))
+                                    {
+                                        datePicked = "Last 30 Days";
+                                    }
+                                    float averageActivePlayers = float.Parse(row.SelectSingleNode(".//td[2]").InnerText);
+                                    string averageActivePlayersFormatted = averageActivePlayers.ToString("N0");
+                                    if (string.Equals(date, datePicked.Trim(), StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        Console.WriteLine($"{gamePicked} had {averageActivePlayersFormatted} average active players in {date}");
+                                        dateFound = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error occured: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Game not found");
+                }
+                if (!dateFound && gameFound)
+                {
+                Console.WriteLine("Date not found");
+                }
+            }
+        }
+        static void PrintMiscData()
+        {
+            bool shouldContinue = true;
+            while (shouldContinue)
+            {
+                bool gameFound = false;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("What game would you like to scrape? (press enter to exit)");
+                Console.ResetColor();
+                string gamePicked = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(gamePicked))
+                {
+                    shouldContinue = false;
+                    continue;
+                }
+                gamePicked = CapitalizeFirstLetter(gamePicked);
+                int appId = GetAppId(gamePicked);
+                List<object> games = new List<object>();
+                float activePlayers;
+                var steamUrl = $"https://store.steampowered.com/app/{appId}/{gamePicked}/";
+                using (var client = new WebClient())
+                {
+                    var html = client.DownloadString(steamUrl);
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    string gameName = doc.DocumentNode.SelectSingleNode("/html/body/div[1]/div[7]/div[8]/div[1]/div[2]/div[1]/div[2]/div[2]/div/div[3]")?.InnerText;
+                    string recentReviews = doc.DocumentNode.SelectSingleNode("//*[@id='userReviews']/div[1]/div[2]/span[1]")?.InnerText;
+                    string allReviews = doc.DocumentNode.SelectSingleNode("//*[@id='userReviews']/div[2]/div[2]/span[1]")?.InnerText;
+                    string developer = doc.DocumentNode.SelectSingleNode("//*[@id='developers_list']/a")?.InnerText;
+                    string releaseDate = doc.DocumentNode.SelectSingleNode("//*[@id='game_highlights']/div[1]/div/div[3]/div[2]/div[2]")?.InnerText;
+                    if (gameName == gamePicked)
+                    {
+                        Console.WriteLine($"{gamePicked}:");
+                        Console.WriteLine($"Recent reviews: {recentReviews}");
+                        Console.WriteLine($"All reviews: {allReviews}");
+                        Console.WriteLine($"Developer: {developer}");
+                        Console.WriteLine($"Release date: {releaseDate}");
+                        gameFound = true;
+                    }
+                }
+                string url = $"https://steamcharts.com/app/{appId}";
+                if (gameFound)
+                {
+                    try
+                    {
+                        using (var client = new WebClient())
+                        {
+                            var html = client.DownloadString(url);
+                            var doc = new HtmlDocument();
+                            doc.LoadHtml(html);
+                            var currentTime = DateTime.Now;
+                            int timeHours = int.Parse(GetTime(html, "HH"));
+                            int timeMins = int.Parse(GetTime(html, "mm"));
+                            int timeSecs = int.Parse(GetTime(html, "ss"));
+                            int hoursAgo = currentTime.Hour - timeHours;
+                            if (hoursAgo < 0)
+                            {
+                                hoursAgo = 0;
+                            }
+                            int minsAgo = currentTime.Minute - timeMins;
+                            if (minsAgo < 0)
+                            {
+                                minsAgo = 0;
+                            }
+                            int secondsAgo = currentTime.Second - timeSecs;
+                            if (secondsAgo < 0)
+                            {
+                                secondsAgo = 0;
+                            }
+                            
+                            if (gameFound)
+                            {
+                                activePlayers = float.Parse(doc.DocumentNode.SelectSingleNode("//*[@id='app-heading']/div[1]/span").InnerText);
+                                string activePlayersFormatted = activePlayers.ToString("N0");
+                                Console.WriteLine($"{gamePicked} had {activePlayersFormatted} people playing {hoursAgo} hours {minsAgo} mins {secondsAgo} seconds ago");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error occured: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Game not found");
+                }
+            }
+        }
+        static string CapitalizeFirstLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            string[] words = input.Split(' ');
+            for (int i = 0; i < words.Length; i++)
+            {
+                char[] charArray = words[i].ToCharArray();
+                if (charArray.Length > 0)
+                {
+                    charArray[0] = char.ToUpper(charArray[0]);
+                    words[i] = new string(charArray);
+                }
+            }
+
+            return string.Join(" ", words);
+        }
         static int GetAppId(string gameName)
         {
             var url = $"https://store.steampowered.com/search/?term={gameName}&type=vg&count=100";
@@ -178,7 +380,7 @@ internal class NewBaseType
                 doc.LoadHtml(html);
 
                 var gameNode = doc.DocumentNode.SelectSingleNode("//div[@id='search_resultsRows']/a");
-              if (gameNode != null)
+                if (gameNode != null)
                 {
                     var href = gameNode.Attributes["href"].Value;
                     var parts = href.Split('/');
@@ -186,14 +388,11 @@ internal class NewBaseType
                 }
                 else
                 {
-
-                    Console.ForegroundColor = ConsoleColor.Red;
                     throw new ArgumentException($"App ID for {gameName} not found.");
-                    Console.ResetColor();
                 }
             }
         }
-        static string GetTime(string html)
+        static string GetTime(string html, string format)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
@@ -203,7 +402,7 @@ internal class NewBaseType
             {
                 var timeValue = timeNode.Attributes["title"].Value;
                 DateTime dateTime = DateTime.ParseExact(timeValue, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
-                string timeOutput = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                string timeOutput = dateTime.ToString(format);
                 return timeOutput;
             }
             else
