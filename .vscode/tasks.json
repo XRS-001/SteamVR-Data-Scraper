@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Steam VR Data/Steam VR Data.csproj",
+                "${workspaceFolder}/Steam VR Data.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Steam VR Data/Steam VR Data.csproj",
+                "${workspaceFolder}/Steam VR Data.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Steam VR Data/Steam VR Data.csproj"
+                "${workspaceFolder}/Steam VR Data.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
