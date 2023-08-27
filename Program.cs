@@ -202,7 +202,7 @@ internal class NewBaseType
                     var html = client.DownloadString(steamUrl);
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
-                    var gameName = doc.DocumentNode.SelectSingleNode("/html/body/div[1]/div[7]/div[8]/div[1]/div[2]/div[1]/div[2]/div[2]/div/div[3]")?.InnerText;
+                    var gameName = doc.DocumentNode.SelectSingleNode("//div[@class='apphub_AppName']")?.InnerText;
                     if (gameName == gamePicked)
                     {
                         gameFound = true;
@@ -287,7 +287,7 @@ internal class NewBaseType
                     var html = client.DownloadString(steamUrl);
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
-                    string gameName = doc.DocumentNode.SelectSingleNode("/html/body/div[1]/div[7]/div[8]/div[1]/div[2]/div[1]/div[2]/div[2]/div/div[3]")?.InnerText;
+                    string gameName = doc.DocumentNode.SelectSingleNode("//div[@class='apphub_AppName']")?.InnerText;
                     string recentReviews = doc.DocumentNode.SelectSingleNode("//*[@id='userReviews']/div[1]/div[2]/span[1]")?.InnerText;
                     string allReviews = doc.DocumentNode.SelectSingleNode("//*[@id='userReviews']/div[2]/div[2]/span[1]")?.InnerText;
                     string developer = doc.DocumentNode.SelectSingleNode("//*[@id='developers_list']/a")?.InnerText;
